@@ -2,7 +2,7 @@
     <div id="app">
         <div class="card" v-for="note in notes">
             <div class="card-header">
-                <button class="btn btn-clear float-right" @click="deleteNote(note)"></button>
+                <button class="btn btn-clear float-right" @click="deleteNote(note)">Delete</button>
                 <div class="card-title">{{ note.title }}</div>
                 <div class="card-subtitle">{{ convertDateToTimeAgo(note.created_at) }}</div>
             </div>
