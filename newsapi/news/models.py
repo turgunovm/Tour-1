@@ -19,14 +19,22 @@ class TourPack(models.Model):
     description = models.TextField()
     price = models.IntegerField()
     tour_img = models.ImageField(blank=True, null=True)
-    from_to = models.CharField(max_length=120)
+    from_where = models.CharField(max_length=120)
+    to = models.CharField(max_length=120)
     start_date = models.DateField()
     end_date = models.DateField()
     quantity = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
-    status = models.IntegerField()
+    STATUS_CHOICES = (
+    (ACTIVE, "Active"),
+    (FULL, "Full"),
+    (EXPIRED, "Expired"),
+    (NEW, "New"),
+    )
+    status = models.CharField(max_length=9,
+                  choices=STATUS_CHOICES,
+                  default=ACTIVE)
 
     def __str__(self):
         return "Tur:{}- DESC:{}- PRICE: ${}- Start_date:{}- end_date:{} -Quantity:{}".format(
@@ -60,4 +68,50 @@ class ClientTour(models.Model):
 
     def __str__(self):
         return "{} {}".format(self.tourpack_id, self.client_id)
+
+class ClientTourParticipant(models.Model):
+    clienttour_id = models.ForeignKey(ClientTour, null=True, related_name="clienttour_id", on_delete=models.CASCADE)
+    client_id = models.ForeignKey(Client, null=True, related_name="client_id", on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "{} {}".format(self.clienttour_id, self.client_id)
+
+class Order(models.Model):
+    clienttour_id = models.ForeignKey(ClientTour, null=True, related_name="clienttour_id", on_delete=models.CASCADE)
+    STATUS_CHOICES = (
+    (ACTIVE, "Active"),
+    (FULL, "Full"),
+    (EXPIRED, "Expired"),
+    (NEW, "New")
+    )
+    status = models.CharField(max_length=9,
+                  choices=STATUS_CHOICES,
+                  default=ACTIVE)
+    PAYMENT_STATUS = (
+    (PAID, "Paid"),
+    (NOT_PAID, "Not Paid")
+    )
+    payment_status = models.CharField(max_length=9,
+                  choices=PAYMENT_STATUS,
+                  default=PAID)
+    PAYMENT_METHODS = (
+    (VISA, "Pay w/ Visa Card"),
+    (MS, "Pay w/ MasterCard"),
+    (CRYPTO, "Pay w/ CRYPTO"),
+    (PAYPAL, "Pay w/ Paypal"),
+    (CASH, "Pay in cash")
+    )
+    payment_methods = models.CharField(max_length=9,
+                  choices=PAYMENT_METHODS,
+                  default=CASH)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return "{} {} {} {} {} {}".format(self.clienttour_id, self.client_id, self.status, self.payment_status, self.payment_methods, self.created_at)
+
+
+
+
 
