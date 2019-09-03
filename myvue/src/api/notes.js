@@ -12,5 +12,11 @@ export const Note = {
     return HTTP.get('/tourpack/').then(response => {
       return response.data
     })
+  },
+  detail(note) {
+    return HTTP.get('/tourpack/${note.id}/').then(response =>{
+      return response.data
+       
+    })
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div>
       <b-navbar toggleable="lg" text-variant="white" variant="warning">
-        <b-navbar-brand href="#"><strong>World-Tour</strong> </b-navbar-brand>
+        <b-navbar-brand href="/"><strong>World-Tour</strong> </b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
            
@@ -14,10 +14,10 @@
           <b-navbar-nav class="ml-auto">
             <b-nav>
               <b-nav-item active>Active</b-nav-item>
-              <b-nav-item>Home</b-nav-item>
-              <b-nav-item>About</b-nav-item>
-              <b-nav-item>Services</b-nav-item>
-              <b-nav-item>Hot Tour</b-nav-item>
+              <b-nav-item to="/">Home</b-nav-item>
+              <b-nav-item :to="{ path: 'detail' }">About</b-nav-item>
+              <b-nav-item :to="{ path: 'tour'}">Services</b-nav-item>
+              <b-nav-item :to="{ path: 'login'}">Hot Tour</b-nav-item>
             </b-nav>
             <b-nav-item-dropdown text="Lang" right>
               <b-dropdown-item href="#">EN</b-dropdown-item>
@@ -42,7 +42,7 @@
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
-      <b-carousel
+      <!-- <b-carousel 
                   id="carousel-fade"
                   style="text-shadow: 0px 0px 2px #000"
                   fade
@@ -62,7 +62,7 @@
             caption="Third Slide"
             img-src="https://picsum.photos/1024/480/?image=22"
           ></b-carousel-slide>
-        </b-carousel>
+        </b-carousel>-->
 
     </div>
 </template>
