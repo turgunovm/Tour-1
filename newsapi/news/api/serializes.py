@@ -16,21 +16,55 @@ class ClientSerializer(serializers.ModelSerializer):
 
 class ClientTourSerializer(serializers.ModelSerializer):
     
+
     class Meta:
         model = ClientTour
         fields = '__all__'
 
 class ClientTourParticipantSerializer(serializers.ModelSerializer):
-    
     class Meta:
         model = ClientTourParticipant
         fields = '__all__'
-
+ 
 class OrderSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Order
         fields = '__all__'
+
+    def create(self, validation_data):
+        # print(validation_data)
+        return Article.objects.create(**validation_data)
+
+    def update(self, instance, validation_data):
+        instance.author = validation_data.get('author', instance.author)
+        instance.title = validation_data.get('title', instance.title)
+        instance.body = validation_data.get('body', instance.bodycd )
+        instance.description = validation_data.get('description', instance.description)
+        instance.location = validation_data.get('location', instance.location)
+        instance.publication_date = validation_data.get('publication_date', instance.publication_date)
+        instance.active = validation_data.get('active', instance.active)
+        instance.save()
+        return instance
+
+class TourPackSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    name = serializers.CharField()
+    description = serializers.CharField()
+    price = serializers.CharField()
+    tour_img = serializers.ImageField(read_only=True, )
+    from_to = serializers.CharField()
+    start_date = serializers.DateField()
+    end_date = serializers.DateField()
+    quantity = serializers.IntegerField()
+    created_at = serializers.DateTimeField(read_only=True)
+    updeted_at = serializers.DateTimeField(read_only=True)
+    status = serializers.IntegerField()
+
+    
+    
+
+
 
 
 
