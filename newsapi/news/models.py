@@ -106,7 +106,11 @@ class Order(models.Model):
 
 
     def __str__(self):
+<<<<<<< HEAD
         return "{} {}".format(self.clienttour_id, self.client_id)
+=======
+        return "{}".format(self.clienttour_id, self.client_id)
+>>>>>>> 81edcc712ae621f825854fe74ea8640fe4f8afcc
 
 
 
