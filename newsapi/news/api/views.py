@@ -86,7 +86,7 @@ def article_detail_api_view(request, pk):
 @api_view(['GET', 'POST'])
 def tourpack_list_create_api_view(request):
     if request.method == 'GET':
-        tourpack = TourPack.objects.filter(status=True)
+        tourpack = TourPack.objects.all()
         # serializer = TourPackSerializer(tourpack, many=True)
         return Response(TourPackSerializer(tourpack, many=True, context={'request': request}).data)
         # return Response(serializer.data)
