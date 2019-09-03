@@ -27,23 +27,18 @@ class TourPack(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     STATUS_CHOICES = (
-    (ACTIVE, "Active"),
-    (FULL, "Full"),
-    (EXPIRED, "Expired"),
-    (NEW, "New"),
+    ("ACTIVE", "Active"),
+    ("FULL", "Full"),
+    ("EXPIRED", "Expired"),
+    ("NEW", "New"),
     )
     status = models.CharField(max_length=9,
                   choices=STATUS_CHOICES,
-                  default=ACTIVE)
+                  default="Active")
 
     def __str__(self):
-        return "Tur:{}- DESC:{}- PRICE: ${}- Start_date:{}- end_date:{} -Quantity:{}".format(
-                                                                                            self.name, 
-                                                                                            self.description,
-                                                                                            int(self.price),
-                                                                                            self.start_date,
-                                                                                            self.end_date,
-                                                                                            self.quantity)
+        return "{}".format(self.name)
+
 
 class Client(models.Model):
     username = models.CharField(max_length=16)
@@ -57,11 +52,11 @@ class Client(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return "{} {} {} ".format(self.username, int(self.phone_number), self.email)
+        return "{}".format(self.username)
 
 class ClientTour(models.Model):
-    tourpack_id = models.ForeignKey(TourPack, null=True, related_name="tourpack_id", on_delete=models.CASCADE)
-    client_id = models.ForeignKey(Client, null=True, related_name="client_id", on_delete=models.CASCADE)
+    tourpack_id = models.ForeignKey(TourPack, null=True, related_name="clienttour_tourpack_id", on_delete=models.CASCADE)
+    client_id = models.ForeignKey(Client, null=True, related_name="clienttour_client_id", on_delete=models.CASCADE)
     adult_count = models.PositiveIntegerField(default=1)
     child_count = models.PositiveIntegerField(null=True, blank=True, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -70,46 +65,48 @@ class ClientTour(models.Model):
         return "{} {}".format(self.tourpack_id, self.client_id)
 
 class ClientTourParticipant(models.Model):
-    clienttour_id = models.ForeignKey(ClientTour, null=True, related_name="clienttour_id", on_delete=models.CASCADE)
-    client_id = models.ForeignKey(Client, null=True, related_name="client_id", on_delete=models.CASCADE)
+    clienttour_id = models.ForeignKey(ClientTour, null=True, related_name="participant_clienttour_id", on_delete=models.CASCADE)
+    client_id = models.ForeignKey(Client, null=True, related_name="participant_client_id", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return "{} {}".format(self.clienttour_id, self.client_id)
 
 class Order(models.Model):
-    clienttour_id = models.ForeignKey(ClientTour, null=True, related_name="clienttour_id", on_delete=models.CASCADE)
+    clienttour_id = models.ForeignKey(ClientTour, null=True, related_name="order_clienttour_id", on_delete=models.CASCADE)
+    client_id = models.ForeignKey(Client, null=True, related_name="order_client_id", on_delete=models.CASCADE)
+
     STATUS_CHOICES = (
-        (ACTIVE, "Active"),
-        (FULL, "Full"),
-        (EXPIRED, "Expired"),
-        (NEW, "New")
+        ("ACTIVE", "Active"),
+        ("FULL", "Full"),
+        ("EXPIRED", "Expired"),
+        ("NEW", "New")
     )
     status = models.CharField(max_length=9,
                   choices=STATUS_CHOICES,
-                  default=ACTIVE)
+                  default="Active")
     PAYMENT_STATUS = (
-        (PAID, "Paid"),
-        (NOT_PAID, "Not Paid")
+        ("PAID", "Paid"),
+        ("NOT_PAID", "Not Paid")
     )
     payment_status = models.CharField(max_length=9,
                   choices=PAYMENT_STATUS,
-                  default=PAID)
+                  default="Paid")
     PAYMENT_METHODS = (
-        (VISA, "Pay w/ Visa Card"),
-        (MS, "Pay w/ MasterCard"),
-        (CRYPTO, "Pay w/ CRYPTO"),
-        (PAYPAL, "Pay w/ Paypal"),
-        (CASH, "Pay in cash")
+        ("VISA", "Pay w/ Visa Card"),
+        ("MS", "Pay w/ MasterCard"),
+        ("CRYPTO", "Pay w/ CRYPTO"),
+        ("PAYPAL", "Pay w/ Paypal"),
+        ("CASH", "Pay in cash")
     )
     payment_methods = models.CharField(max_length=9,
                   choices=PAYMENT_METHODS,
-                  default=CASH)
+                  default="Pay in cash")
     created_at = models.DateTimeField(auto_now_add=True)
 
 
     def __str__(self):
-        return "{} {} {} {} {} {}".format(self.clienttour_id, self.client_id, self.status, self.payment_status, self.payment_methods, self.created_at)
+        return "{}".format(self.clienttour_id, self.client_id)
 
 
 
