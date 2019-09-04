@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="tour">
          <b-card title=""
                 overlay
                 border-variant="primary"
@@ -43,13 +43,8 @@
           </b-card>
     </div>
 </template>
-import {mapGetters} from "vuex";
+<script>
 export default {
-   name:'tour-details',
    props:['tour']
-  computed: mapGetters(["notes"]),
-   beforeMount() {
-      this.$store.dispatch("getNotes");
-    }
 }
 </script>

@@ -7,31 +7,29 @@ import Login    from './components/Login'
 export const routes = [
     {
         path: '/',
-        name: 'AppHeader',
-        component: AppHeader
+        name: 'note-list',
+        component: NoteList
       },
       {
         path: '/tour',
         name: 'notelist',
         component: NoteList
       },
-      {
-        path: true,
-        path: '/detail/:tour_id',
+      { 
+        path: '/detail/:id',
         name: 'tourdetail',
+        props: true,
         component: TourDetail
       },
       {
-        path: true,
-        path: '/details/:note_id',
+        path:'/details',
         name: 'tourdetails',
         component: TaskDetails
       },
       {
-       
         path: '/login',
         name: 'login',
         component: Login
       },
-      { path: '*', component:() => import('./components/AppHeader.vue')}
+      { path: '*', component:() => import('./components/NoteList.vue')}
 ]

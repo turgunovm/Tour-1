@@ -2,6 +2,7 @@
     <div id="app2">
       
      <b-container fluid class="bv-example-row">
+      
       <b-row>
         <b-col sm="3" v-for="tour in tours" :key="tour.id">
           <b-link href="#">
@@ -39,12 +40,10 @@
                             squared 
                             href="#"
                             variant="outline-primary"
-                            @click="detailNote(note)"
-                            to="{name:'tourdetail',params:{tour_id:tour}}"
+                            :to="{name:'tourdetail',params:{id:tour.id}}"
                             >
                             Detail
                     </b-button>
-                
           </b-card>
           </b-link>
         </b-col>
@@ -71,12 +70,12 @@
         console.log(this.notes);
         this.$store.dispatch("deleteNote", note);
       },
-      detailNote(id) {
-        console.log(this.id);
-        this.$store.dispatch("detailNote", id);
-        this.$router.push({ path: `/detail/${this.id}` })
+      // detailNote(id) {
+      //   console.log(this.id);
+      //   this.$store.dispatch("detailNote", id);
+      //   this.$router.push({ path: `/detail/${this.id}` })
 
-      }
+      // }
     },
     beforeMount() {
       this.$store.dispatch("getNotes");
