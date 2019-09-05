@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { Note } from '../api/notes'
-import {ADD_NOTE, REMOVE_NOTE, SET_NOTES} from './mutation-types.js'
+import {ADD_NOTE, REMOVE_NOTE, SET_NOTES,DETAIL_NOTES} from './mutation-types.js'
 
 Vue.use(Vuex)
 // Состояние
@@ -27,6 +27,11 @@ const mutations = {
   // Задаем список заметок
   [SET_NOTES] (state, { notes }) {
     state.notes = notes
+  },
+  [DETAIL_NOTES] (state,{ id }) {
+    state.notes = state.notes.find(note=> {
+      return note.id == id
+    })
   }
 }
 // Действия
@@ -45,6 +50,12 @@ const actions = {
     Note.list().then(notes => {
       commit(SET_NOTES, { notes })
     })
+  },
+  detailNotes({commit},note) {
+    Note.detail(note).then(res=>{
+      commit(DETAIL_NOTES, note)
+    })
+    
   }
 }
 export default new Vuex.Store({

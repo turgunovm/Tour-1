@@ -1,23 +1,15 @@
 <template>
-  <div id="app">
-    <!-- <div class="card" v-for="note in notes" :key="note.id">
-      <div class="card-header">
-        <img :src="note.tour_img" alt />
-       
-        <button class="btn btn-clear float-right" ></button>
-        <div class="card-title"></div>
-        <div class="card-subtitle">{{ convertDateToTimeAgo(note.created_at) }}</div>
-      </div>
-      <div class="card-body"></div>
-    </div> -->
-    <b-container fluid class="bv-example-row">
+    <div id="app2">
+      
+     <b-container fluid class="bv-example-row">
+      
       <b-row>
-        <b-col sm="3" v-for="note in notes" :key="note.id">
+        <b-col sm="3" v-for="tour in tours" :key="tour.id">
           <b-link href="#">
             <b-card title=""
                 overlay
                 border-variant="primary"
-                :img-src="note.tour_img" 
+                :img-src="tour.tour_img" 
                 img-alt="Image" 
                 img-top 
                 tag="article"
@@ -27,19 +19,19 @@
                 bg-variant="dark">
                 
                   <b-card-text center text-variant="white">
-                    {{note.name}}
+                    {{tour.name}}
                     </b-card-text>
                     <b-card-text>
-                    <!-- {{ note.description }} -->
-                    <!-- {{ note.price }} -->
+                    <!-- {{ tour.description }} -->
+                    <!-- {{ tour.price }} -->
                     </b-card-text>
-                      <!-- <div class="card-subtitle">{{ convertDateToTimeAgo(note.created_at) }}</div> -->
+                      <!-- <div class="card-subtitle">{{ convertDateToTimeAgo(tour.created_at) }}</div> -->
                     <b-button
                             lg=2
                             squared 
                             href="#"
                             variant="outline-primary" 
-                            @click="deleteNote(note)"
+                            @click="deleteNote(tour)"
                             >
                             Exit
                     </b-button>
@@ -47,31 +39,29 @@
                             lg=2
                             squared 
                             href="#"
-                            variant="outline-primary" 
-                            
-                            :to="{name:'note',params:{id:note.id}}"
+                            variant="outline-primary"
+                            :to="{name:'tourdetail',params:{id:tour.id}}"
                             >
                             Detail
                     </b-button>
-                
           </b-card>
           </b-link>
-          
         </b-col>
       </b-row>
     </b-container>
   </div>
 </template>
-
-
 <script>
-  import {
-    mapGetters
-  } from "vuex";
+  import {mapGetters} from "vuex";
   import prettydate from "pretty-date";
   export default {
     name: "note-list",
-    computed: mapGetters(["notes"]),
+    computed:{
+      ...mapGetters({
+        tours: 'notes'
+        }),
+    },
+    
     methods: {
       convertDateToTimeAgo(date) {
         return prettydate.format(new Date(date));
@@ -79,10 +69,17 @@
       deleteNote(note) {
         console.log(this.notes);
         this.$store.dispatch("deleteNote", note);
-      }
+      },
+      // detailNote(id) {
+      //   console.log(this.id);
+      //   this.$store.dispatch("detailNote", id);
+      //   this.$router.push({ path: `/detail/${this.id}` })
+
+      // }
     },
     beforeMount() {
       this.$store.dispatch("getNotes");
+      // this.deleteNote()
     }
   };
 

@@ -16,16 +16,16 @@ class ClientSerializer(serializers.ModelSerializer):
 
 class ClientTourSerializer(serializers.ModelSerializer):
     
+
     class Meta:
         model = ClientTour
         fields = '__all__'
 
 class ClientTourParticipantSerializer(serializers.ModelSerializer):
-    
     class Meta:
         model = ClientTourParticipant
         fields = '__all__'
-
+ 
 class OrderSerializer(serializers.ModelSerializer):
     
     class Meta:
@@ -91,4 +91,3 @@ class OrderSerializer(serializers.ModelSerializer):
 #         instance.status = validation_data.get('status', instance.status)
 #         instance.save()
 #         return instance
-
