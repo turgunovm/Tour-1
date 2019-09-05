@@ -3,8 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import get_object_or_404
-from news.models import Article, TourPack
-from news.api.serializes import ArticleSerializer, TourPackSerializer
+from news.models import TourPack, Client, ClientTour, ClientTourParticipant, Order
+from news.api.serializes import (TourPackSerializer, ClientSerializer, ClientTourSerializer, ClientTourParticipantSerializer, OrderSerializer)
 
 # @api_view(['GET', 'POST'])
 # class ArticleListCreateAPIView(APIView):

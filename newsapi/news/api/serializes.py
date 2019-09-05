@@ -32,9 +32,6 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = '__all__'
 
-
-
-
 # class ArticleSerializer(serializers.Serializer):
 #     id = serializers.IntegerField(read_only=True)
 #     author = serializers.CharField()
